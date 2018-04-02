@@ -1,0 +1,21 @@
+kayttaja->selain:
+note left of selain
+kayttaja avaa sivun kaavion 0.3 mukaan
+end note
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa uuden muistiinpanon 
+formin inputiin ja painaa Tallenna
+end note
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
+note right of selain
+  BODY: {note: "<muistiinpano>"}
+end note
+note right of palvelin
+  palvelin tallettaa 
+  muistiinpanon tietokantaan
+end note
+palvelin->selain: status 200
+note left of selain
+ Selain piirtää uuden muistiinpanon
+end note

@@ -1,0 +1,24 @@
+kayttaja->selain:
+note left of selain
+kayttaja kirjottaa osoiteriville
+fullstack-exampleapp.herokuapp.com/notes
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: status 200, sivun HTML-koodi
+note left of palvelin
+  muodostetaan HTML missä sivulle tuodaan 
+  (kohta ladattavat) JS- ja CSS-koodit
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+palvelin->selain: status 200, CSS-koodi
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+palvelin->selain: status 200, JS-koodi noten lisäämiselle
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: status 200, Valmiit notet lisättäviksi
+
+
+note left of selain
+ Selain piirtää data.json:ista ladatut muistiinpanot 
+ main.js:n ohjeen mukaan, ja tyylittelee sivun main.css:n 
+ mukaan
+end note
