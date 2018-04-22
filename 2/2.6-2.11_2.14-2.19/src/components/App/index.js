@@ -5,6 +5,9 @@ import * as services from '../../services/persons.js'
 import Form from './Form'
 import List from './List'
 import Filter from './Filter'
+import Notification from './Notification'
+
+import './index.css'
 
 class App extends React.Component {
     constructor(props) {
@@ -14,8 +17,24 @@ class App extends React.Component {
             newName: '',
             newNumero: '',
             adding: false,
+            notification: null,
             filter: ''
         }
+    }
+
+    notify = (message, type) => {
+        this.setState({
+            notification: {
+                message,
+                type,
+            }
+        })
+        clearTimeout(this.notificationTimeout)
+        this.notificationTimeout = setTimeout(() => {
+            this.setState({
+                notification: null,
+            })
+        }, 4000)
     }
 
     componentWillMount = () => {
@@ -27,13 +46,11 @@ class App extends React.Component {
 
     onAdd = (e) => {
         e.preventDefault()
-        const newName = this.state.newName.trim()
-        const newNumero = this.state.newNumero.trim()
         const newPerson = {
-            name: newName,
-            numero: newNumero
+            name: this.state.newName.trim(),
+            numero: this.state.newNumero.trim()
         }
-        const existingPerson = this.state.persons.find(p => p.name === newName)
+        const existingPerson = this.state.persons.find(p => p.name === newPerson.name)
         if (!existingPerson) {
             this.setState({
                 adding: true,
@@ -48,15 +65,23 @@ class App extends React.Component {
                         newName: '',
                         adding: false,
                     })
+                    this.notify(`lisättiin ${newPerson.name}`, 'success')
+                })
+                .catch((e) => {
+                    this.notify(e.message, 'error')
                 })
             
         } else {
-            window.confirm(`${newName} on jo luettelossa, korvataanko vanha numero uudella?`) && (
+            window.confirm(`${newPerson.name} on jo luettelossa, korvataanko vanha numero uudella?`) && (
                 services.update(existingPerson.id, newPerson)
                     .then(() => {
                         this.setState({
                             persons: [...this.state.persons.filter(p => p.id !== existingPerson.id), newPerson]
                         })
+                        this.notify(`lisättiin ${newPerson.name}`, 'success')
+                    })
+                    .catch((e) => {
+                        this.notify(e.message, 'error')
                     })
             )
         }
@@ -88,6 +113,9 @@ class App extends React.Component {
                         persons: this.state.persons.filter(p => p.id !== person.id)
                     })
                 })
+                .catch((e) => {
+                    this.notify(e.message, 'error')
+                })
         )
     }
 
@@ -95,6 +123,7 @@ class App extends React.Component {
         return (
             <div>
                 <h1>Puhelinluettelo</h1>
+                {this.state.notification && <Notification notification={this.state.notification} />}
                 <Filter 
                     filter={this.state.filter}
                     onFilter={this.onFilter}
