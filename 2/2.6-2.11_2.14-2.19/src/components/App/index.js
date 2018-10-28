@@ -15,7 +15,7 @@ class App extends React.Component {
         this.state = {
             persons: [],
             newName: '',
-            newNumero: '',
+            newNumber: '',
             adding: false,
             notification: null,
             filter: ''
@@ -48,7 +48,7 @@ class App extends React.Component {
         e.preventDefault()
         const newPerson = {
             name: this.state.newName.trim(),
-            numero: this.state.newNumero.trim()
+            number: this.state.newNumber.trim()
         }
         const existingPerson = this.state.persons.find(p => p.name === newPerson.name)
         if (!existingPerson) {
@@ -99,9 +99,9 @@ class App extends React.Component {
         })
     }
 
-    onNumero = (e) => {
+    onNumber = (e) => {
         this.setState({
-            newNumero: e.target.value
+            newNumber: e.target.value
         })
     }
 
@@ -131,9 +131,9 @@ class App extends React.Component {
                 <Form 
                     onAdd={this.onAdd}
                     onNimi={this.onNimi}
-                    onNumero={this.onNumero}
+                    onNumber={this.onNumber}
                     newName={this.state.newName}
-                    newNumero={this.state.newNumero}
+                    newNumber={this.state.newNumber}
                     adding={this.state.adding}
                 />
                 <List 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({ onAdd, onNimi, onNumero, newName, newNumero, adding }) => (
+export default ({ onAdd, onNimi, onNumber, newName, newNumero, adding }) => (
     <div>
         <h3>Lisää uusi</h3>
         {adding ? (
@@ -13,7 +13,7 @@ export default ({ onAdd, onNimi, onNumero, newName, newNumero, adding }) => (
                     nimi: <input onChange={onNimi} value={newName} />
                 </div>
                 <div>
-                    numero: <input onChange={onNumero} value={newNumero} />
+                    numero: <input onChange={onNumber} value={newNumero} />
                 </div>
                 <div>
                     <button type="submit">lisää</button>

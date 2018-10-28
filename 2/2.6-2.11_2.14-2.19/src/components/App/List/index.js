@@ -12,7 +12,7 @@ export default ({ persons, filter, onDelete }) => (
                 <p key={p.name}>
                     <span>{p.name}</span>
                     {' '}
-                    <span>{p.numero}</span>
+                    <span>{p.number}</span>
                     <button onClick={() => onDelete(p)}>poista</button>
                 </p>
             ))}
